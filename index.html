@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poke API</title>
+</head>
+
+<body>
+    <label for="nombrePokemon">Nombre del Pokemon</label>
+    <input type="text" id="nombrePokemon">
+    <button id="buscarBtn">Buscar</button>
+
+    <img src="" alt="">
+
+    <script>
+        const nombrePokemonInput = document.querySelector('#nombrePokemon');
+        const buscarBtn = document.querySelector('#buscarBtn');
+
+        buscarBtn.addEventListener('click', () => {
+            const nombre = nombrePokemonInput.value.toLowerCase();
+            
+            if (nombre !== '') {
+                fetch(`https://pokeapi.co/api/v2/pokemon/${nombre}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.querySelector('img').src = data.sprites.front_default;
+                    })
+                    .catch(error => {
+                        alert(`El Pokemon "${nombre}"" no existe`);
+                        document.querySelector('img').src = '';
+                    });
+            }else{
+                alert('Ingrese el nombre del Pokemon');
+                document.querySelector('img').src = '';
+            }
+        });
+    </script>
+</body>
+
+</html>
